@@ -9,6 +9,7 @@ ENV GO111MODULE=on \
     GOOS=linux \
     GOARCH=amd64 \
 	GOPROXY="https://goproxy.cn,direct"
+RUN go env -w GOPROXY=https://goproxy.cn,direct
 
 # 复制所有项目文件到 docekr 容器当中
 COPY ../ ./
