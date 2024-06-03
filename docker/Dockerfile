@@ -10,7 +10,7 @@ ENV GO111MODULE=on \
     GOARCH=amd64 \
 	GOPROXY="https://goproxy.cn,direct"
 
-COPY ../ .
+COPY ../ ./
 
 RUN go mod download
 
