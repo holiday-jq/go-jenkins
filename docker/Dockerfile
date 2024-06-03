@@ -10,9 +10,11 @@ ENV GO111MODULE=on \
     GOARCH=amd64 \
 	GOPROXY="https://goproxy.cn,direct"
 
-COPY go.mod go.sum ./
-RUN go mod download
+# 复制所有项目文件到 docekr 容器当中
 COPY ../ ./
+
+# 下载依赖项
+RUN go mod download
 
 RUN go build -o main ./main.go
 
