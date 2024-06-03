@@ -1,1 +1,19 @@
 docker build --network host  -f ./docker/Dockerfile -t go-docker-hjq:1.0.0 .
+
+
+
+
+
+docker build --network host   不指定--network  go mod download下载超时
+
+根据搜索到的内容总结如下
+当你在使用 docker build 命令构建镜像时，如果没有指定 --network host 并且遇到了 go mod download 下载超时的问题，这可能是由于默认的网络配置限制了对外部网络的访问，尤其是在执行 go mod 下载依赖包时。
+
+Docker默认为构建过程使用的是一个桥接网络，这个网络环境可能不会继承宿主机的网络配置，如代理设置、DNS解析规则等，这可能导致以下问题：
+
+DNS解析失败：如果依赖于特定的DNS服务器或内部域名解析，宿主机网络配置的DNS服务器可能不在Docker默认的网络配置中。
+网络代理问题：企业环境或需要通过HTTP(S)代理访问外网时，Docker默认网络可能不自动应用这些代理设置。
+防火墙或网络策略限制：宿主机或网络策略可能限制了Docker容器对外部资源的访问。
+通过指定 --network host 参数，Docker构建过程会使用宿主机的网络堆栈，这意味着构建过程中的网络请求将直接使用宿主机的网络配置，从而绕过了上述问题。这样，go mod download 就能够正确地使用宿主机的DNS解析、代理设置及网络访问权限，通常可以解决下载依赖时的超时问题。
+
+然而，使用 --network host 也有其潜在风险，比如破坏宿主机的网络隔离性，以及可能的安全风险，因此在非必要时应谨慎使用。在不需要 --network host 的全部功能时，考虑仅针对网络问题进行更精确的配置调整，如使用其他网络模式或在Dockerfile中明确设置代理环境变量等。
