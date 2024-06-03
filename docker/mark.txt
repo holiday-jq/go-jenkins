@@ -1,0 +1,1 @@
+docker build --network host  -f ./docker/Dockerfile -t go-docker-hjq:1.0.0 .
