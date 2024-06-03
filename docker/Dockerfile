@@ -14,7 +14,7 @@ ENV GO111MODULE=on \
 COPY ../ ./
 
 # 下载依赖项
-RUN go mod tidy
+RUN go mod download
 
 RUN go build -o main ./main.go
 
